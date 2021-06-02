@@ -1,5 +1,8 @@
 # trade_snippets
 
+https://www.allthesnippets.com/search/quick_links.html
+
+
 ### symbol_link mapping tradingview
     pre = "https://in.tradingview.com/chart/?symbol=NSE:"
     post = "1!"
