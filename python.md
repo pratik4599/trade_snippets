@@ -1,6 +1,7 @@
 # trade_snippets
 
 https://www.allthesnippets.com/search/quick_links.html
+https://www.interviewqs.com/ddi-code-snippets/home
 
 
 ### symbol_link mapping tradingview
