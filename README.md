@@ -51,6 +51,71 @@
     df.to_csv(r'C:\Users\91956\Desktop\PIVOTS.csv', index=False)
 
 
-   
+ 
+ 
+ 
+ 
+### save tick data to df
+    import pandas as pd
+    from smartapi import SmartConnect
+    from smartapi import WebSocket
+    from plyer import notification 
+ 
+    filename = r'C:\Users\91956\Desktop\PIVOTS.csv'
+    df = pd.read_csv(filename)
+    df = df.assign(ltp=0)
+    dic_map = pd.Series(df.symbol.values, index=df.token).to_dict()
+    # print(dic_map)
+    lis = df['token'].tolist()
+    result = ""
+    for i in lis:
+        result = result + "nse_fo|" + str(i) + '&'
+    result = result[:-1]
+ 
+    obj = SmartConnect(api_key="x")
+    data = obj.generateSession("x", "x@x#")
+    refreshToken = data['data']['refreshToken']
+    feedToken = obj.getfeedToken()
+    FEED_TOKEN = feedToken
+    CLIENT_CODE = "x"
+    token = result
+    task = "mw"
+    ss = WebSocket(FEED_TOKEN, CLIENT_CODE)
+ 
+
+    def on_tick(ws, tick):
+        # print(tick)
+        print()
+        if len(tick) > 0:
+            if 'ltp' in tick[0]:
+                ltp = (tick[0]['ltp'])
+                token = (tick[0]['tk'])
+                token = int(token)
+                global df
+                df.loc[df.token == token, 'ltp'] = ltp
+                nonpopulated = (df.loc[df.ltp == 0, 'ltp'].count())
+                print(nonpopulated)
+                stock_name = (dic_map[token])
+                print(f'stock name : {stock_name: <20} ltp : {ltp}')        
+                df['check_r3'] = df.apply(lambda row: int(float(row.ltp)) > int(float(row.R3)), axis=1)
+                df['check_r2'] = df.apply(lambda row: int(float(row.ltp)) > int(float(row.R2)) and (int(float(row.ltp)) < int(float(row.R3))), axis=1)
+                df.to_csv(r'c:\Users\91956\Desktop\checker.csv')
+
+
+
+    def on_connect(ws, response):
+        ws.websocket_connection()  # Websocket connection
+        ws.send_request(token, task)
+
+
+    def on_close(ws, code, reason):
+        ws.stop()
+
+
+    # Assign the callbacks.
+    ss.on_ticks = on_tick
+    ss.on_connect = on_connect
+    ss.on_close = on_close
+    ss.connect()
    
    
