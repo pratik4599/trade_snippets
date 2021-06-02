@@ -1,8 +1,8 @@
 # trade_snippets
 
 https://www.allthesnippets.com/search/quick_links.html
-https://www.interviewqs.com/ddi-code-snippets/home
-
+`https://www.interviewqs.com/ddi-code-snippets/home`
+https://ostwalprasad.github.io/machine-learning/Must-have-code-snippets-for-every-Data-Science-Notebook.html
 
 ### symbol_link mapping tradingview
     pre = "https://in.tradingview.com/chart/?symbol=NSE:"
