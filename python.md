@@ -4,6 +4,29 @@ https://www.allthesnippets.com/search/quick_links.html
 `https://www.interviewqs.com/ddi-code-snippets/home`
 https://ostwalprasad.github.io/machine-learning/Must-have-code-snippets-for-every-Data-Science-Notebook.html
 
+### filter zerodha instruments
+    import pandas as pd
+    import os
+
+    def create_url(row):
+        final_url = "https://kite.zerodha.com/chart/ext/tvc/NFO-OPT/" + row['tradingsymbol'] + "/" +  str(row['instrument_token'])
+        return final_url
+
+    df = pd.read_csv('https://api.kite.trade/instruments')
+    df = df[df['segment'].str.contains("NFO-OPT") == True]
+    df = df[df['instrument_type'].str.contains("CE") == True]
+    df.drop(df[df['name'] == 'NIFTY'].index, inplace=True)
+    df.drop(df[df['name'] == 'BANKNIFTY'].index, inplace=True)
+    df['url'] = df.apply(lambda row: create_url(row), axis=1)
+    df.to_csv(r'C:\Users\91956\Desktop\alloptstk.csv', index=False)
+
+
+ 
+
+
+
+
+
 ### symbol_link mapping tradingview
     pre = "https://in.tradingview.com/chart/?symbol=NSE:"
     post = "1!"
